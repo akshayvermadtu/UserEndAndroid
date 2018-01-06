@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.homebuddy.homebuddy.UserDetails"
+    android:background="@drawable/grocery_background">
+
+    <LinearLayout
+        android:id="@+id/user_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-80dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Phone"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/user_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Address"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="5dp"/>
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/my_details_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
+</LinearLayout>

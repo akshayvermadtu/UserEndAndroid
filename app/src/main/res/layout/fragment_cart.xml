@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.homebuddy.homebuddy.Cart"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/cart_background">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/place_order_button">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Place Order"
+        android:textSize="20sp"
+        android:background="#FF8C00"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/place_order_button" />
+
+    <ProgressBar
+        android:id="@+id/cart_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/empty_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="No items in your cart"
+        android:textSize="18sp"/>
+
+</RelativeLayout>

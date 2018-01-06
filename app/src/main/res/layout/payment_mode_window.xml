@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment mode"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:gravity="center"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/payment_options"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_border_edittext">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cash on delivery"
+            android:id="@+id/payment_options_cod"/>
+
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paytm on delivery"
+            android:id="@+id/payment_options_pod"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/payment_type_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="none"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   selected"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
