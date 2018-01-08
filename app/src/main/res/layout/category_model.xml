@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        app:cardElevation="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        app:cardElevation="3dp"
         app:contentPadding="0dp"
         android:background="#ffffff">
 
@@ -29,8 +29,8 @@
 
                 <ImageView
                     android:id="@+id/category_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/error_image" />
 
                 <TextView

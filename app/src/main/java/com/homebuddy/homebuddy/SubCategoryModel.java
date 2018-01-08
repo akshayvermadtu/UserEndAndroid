@@ -1,6 +1,6 @@
 package com.homebuddy.homebuddy;
 
-public class SubCategoryModel  {
+class SubCategoryModel  {
     private String subCategoryName;
 
     public SubCategoryModel(){}

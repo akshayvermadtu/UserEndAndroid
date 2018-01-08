@@ -1,12 +1,13 @@
 package com.homebuddy.homebuddy;
 
 public class CategoryModel {
-    private String categoryName;
+    private String categoryName , imageURL ;
 
     public CategoryModel(){}
 
-    CategoryModel(String categoryName ){
+    CategoryModel(String categoryName , String imageURL ){
         this.categoryName = categoryName ;
+        this.imageURL = imageURL ;
     }
 
     public String getCategoryName() {
@@ -17,4 +18,11 @@ public class CategoryModel {
         this.categoryName = categoryName;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 }

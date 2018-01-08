@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
@@ -56,6 +58,11 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
     public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
         CategoryModel activityListItems = activityList.get(position);
         holder.categoryName.setText(activityListItems.getCategoryName());
+        Picasso.with(mContext)
+                .load(activityListItems.getImageURL())
+                .error(R.mipmap.error_image)
+                .resize(30,30)
+                .into(holder.itemImage);
     }
 
     @Override

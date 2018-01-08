@@ -24,12 +24,10 @@ class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.ViewHol
 
 class ViewHolder extends RecyclerView.ViewHolder {
     TextView subCategoryName ;
-    ImageView itemImage ;
 
     ViewHolder(View view) {
         super(view);
         subCategoryName = (TextView) view.findViewById(R.id.sub_category_name);
-        itemImage = (ImageView) view.findViewById(R.id.sub_category_icon);
         view.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
 //                    Toast.makeText(mContext,categoryName.getText().toString(),Toast.LENGTH_SHORT).show();

@@ -127,9 +127,9 @@ public class HomeFragment extends Fragment{
                     try {
                         JSONObject itemDetails = (JSONObject)jsonArray.get(i);
                         String categoryName = itemDetails.get("category_name").toString();
-//                        String itemImage = itemDetails.get("image").toString();
+                        String itemImage = itemDetails.get("image").toString();
 
-                        activityItems = new CategoryModel(categoryName);
+                        activityItems = new CategoryModel(categoryName , "http://192.168.43.43:8000/"+itemImage );
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {

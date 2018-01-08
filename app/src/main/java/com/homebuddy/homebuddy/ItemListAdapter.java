@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,9 +44,9 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName , itemPrice , itemBrand ;
         ImageView itemImage ;
-        public Button addToCart;
+        Button addToCart;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             itemName = (TextView) view.findViewById(R.id.item_name);
             itemPrice = (TextView) view.findViewById(R.id.item_price);
@@ -76,6 +77,12 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
         holder.itemName.setText(activityListItems.getItemName());
         holder.itemPrice.setText(activityListItems.getItemPrice());
         holder.itemBrand.setText(activityListItems.getItemBrand());
+
+        Picasso.with(mContext)
+                .load(activityListItems.getItemImage())
+                .error(R.mipmap.error_image)
+                .resize(60,60)
+                .into(holder.itemImage);
 
 
         holder.addToCart.setOnClickListener(new View.OnClickListener() {
