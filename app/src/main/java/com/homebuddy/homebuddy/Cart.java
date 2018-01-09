@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +41,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Cart extends Fragment {
     protected View mView;
@@ -50,6 +55,8 @@ public class Cart extends Fragment {
     private static final String TAG = "PlaceOrder";
     TextView textView;
     Button button;
+    UserSessionManager session;
+    String user_id;
 
     public Cart() {
         // Required empty public constructor
@@ -76,6 +83,10 @@ public class Cart extends Fragment {
         pDialog.setCancelable(false);
 
         textView = (TextView)mView.findViewById(R.id.empty_cart);
+
+        session = new UserSessionManager(getActivity());
+        final HashMap<String , String> user = session.getUserDetails();
+        user_id = user.get(UserSessionManager.USER_ID);
 
         button = (Button)mView.findViewById(R.id.place_order_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +122,12 @@ public class Cart extends Fragment {
                         .setPositiveButton("Proceed",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        PlaceOrderApiCall("1" , textView.getText().toString());
+                                        if (!Objects.equals(textView.getText().toString(), "none")){
+                                            PlaceOrderApiCall(user_id , textView.getText().toString());
+                                        }
+                                        else
+                                            Toast.makeText(getActivity(),"Please select payment type",Toast.LENGTH_SHORT).show();
+
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -143,7 +159,7 @@ public class Cart extends Fragment {
     private void ShowCartApiCall(){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/showCart/";
+        String api = "http://192.168.1.5:8000/showCart/";
         StringRequest postRequest = new StringRequest(Request.Method.POST, api,
                 new Response.Listener<String>()
                 {
@@ -153,7 +169,7 @@ public class Cart extends Fragment {
                         if (!response.equals("\"{}\"")){
                             List items;
                             String convertString = response.replace("\"", "").replaceAll("[\\[\\](){}]","");
-                            String str[] = convertString.split(",");
+                            String str[] = convertString.split(", ");
                             items = Arrays.asList(str);
                             for(Object s: items){
                                 String str2[] = s.toString().split(":");
@@ -190,7 +206,7 @@ public class Cart extends Fragment {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<>();
-                params.put("id", "1");
+                params.put("id", user_id);
 
                 return params;
             }
@@ -201,7 +217,7 @@ public class Cart extends Fragment {
     private void PlaceOrderApiCall(String id , String paymentType){
         showProgressDialog();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/placeOrder/";
+        String api = "http://192.168.1.5:8000/placeOrder/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
         data.put( "payment_type", paymentType );
@@ -265,6 +281,42 @@ public class Cart extends Fragment {
     private void hideProgressDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+                        drawer.closeDrawer(GravityCompat.START);
+                    } else {
+
+                        HomeFragment fragment = new HomeFragment();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container,fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 }

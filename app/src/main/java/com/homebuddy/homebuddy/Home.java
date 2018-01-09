@@ -14,9 +14,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    UserSessionManager session;
+    String user_id;
+    private static final String TAG = "UserDetails";
+    TextView userName , userPhone ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +44,10 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        session = new UserSessionManager(getApplicationContext());
+        HashMap<String , String> user = session.getUserDetails();
+        user_id = user.get(UserSessionManager.USER_ID);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,14 +66,17 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        userName = (TextView)headerView.findViewById(R.id.nav_username);
+        userPhone = (TextView)headerView.findViewById(R.id.nav_phone);
+
+        UserDetailsApiCall(user_id);
 
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
-
-
-
     }
 
     @Override
@@ -119,6 +146,9 @@ public class Home extends AppCompatActivity
             fragmentTransaction.replace(R.id.fragment_container,fragment);
             fragmentTransaction.commit();
         }
+        else if (id == R.id.nav_logOut) {
+            session.logout();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -128,4 +158,46 @@ public class Home extends AppCompatActivity
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
+
+    private void UserDetailsApiCall(String id){
+        RequestQueue queue = Volley.newRequestQueue(Home.this);
+        String api = "http://192.168.1.5:8000/myDetails/";
+        Map<String, Object> data = new HashMap<>();
+        data.put( "id", id );
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,api,new JSONObject(data),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    String name = response.getString("name");
+                    userName.setText(name);
+                    String phone = response.getString("phone");
+                    userPhone.setText(phone);
+                }
+
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Home.this,"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        })
+        {
+            @Override
+            public String getBodyContentType()
+            {
+                return "application/json";
+            }
+        };
+
+        queue.add(request);
+    }
+
 }

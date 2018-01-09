@@ -66,6 +66,16 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/signUpActivity"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Not a user ?  SignUp here"
+                android:textStyle="bold" />
+
+
+
         </LinearLayout>
 
         <ProgressBar

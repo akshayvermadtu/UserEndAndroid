@@ -2,6 +2,7 @@ package com.homebuddy.homebuddy;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -65,6 +66,9 @@ public class SubCategoryList extends Fragment {
         ((Home) getActivity())
                 .setActionBarTitle(category);
 
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
+
         progressBar = (ProgressBar)mView.findViewById(R.id.sub_category_progress_bar);
         recyclerView = (RecyclerView) mView.findViewById(R.id.sub_category_recycler);
         mAdapter = new SubCategoryAdapter(activityList, getActivity() , SubCategoryList.this);
@@ -72,7 +76,6 @@ public class SubCategoryList extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        setHasOptionsMenu(true);
         SubCategoryListApiCall(category);
 
         return view ;
@@ -81,7 +84,7 @@ public class SubCategoryList extends Fragment {
     void SubCategoryListApiCall(String category){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/showSubCat/";
+        String api = "http://192.168.1.5:8000/showSubCat/";
 
         Map<String, Object> data = new HashMap<>();
         data.put( "category", category );

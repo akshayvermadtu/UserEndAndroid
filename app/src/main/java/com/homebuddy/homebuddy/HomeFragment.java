@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment{
     void CategoryListApiCall(){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/showCat";
+        String api = "http://192.168.1.5:8000/showCat";
 
         VolleyRequester request = new VolleyRequester(Request.Method.GET,api,null,new Response.Listener<JSONArray>() {
             @Override
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment{
                         String categoryName = itemDetails.get("category_name").toString();
                         String itemImage = itemDetails.get("image").toString();
 
-                        activityItems = new CategoryModel(categoryName , "http://192.168.43.43:8000/"+itemImage );
+                        activityItems = new CategoryModel(categoryName , "http://192.168.1.5:8000/"+itemImage );
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {

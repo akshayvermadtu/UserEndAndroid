@@ -1,7 +1,7 @@
 package com.homebuddy.homebuddy;
 
-
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class MyOrders extends Fragment {
     protected View mView;
     private static final String TAG = "myOrders";
@@ -37,12 +36,12 @@ public class MyOrders extends Fragment {
     MyOrderModel activityItems;
     ProgressBar progressBar;
     LinearLayoutManager layoutManager ;
-
+    UserSessionManager session;
+    String user_id;
 
     public MyOrders() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,10 +50,12 @@ public class MyOrders extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
         this.mView = view;
-        setHasOptionsMenu(true);
 
         ((Home) getActivity())
                 .setActionBarTitle("My Orders");
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         progressBar = (ProgressBar)mView.findViewById(R.id.my_order_progress_bar);
         recyclerView = (RecyclerView) mView.findViewById(R.id.my_order_recycler);
@@ -64,7 +65,11 @@ public class MyOrders extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        MyOrderListApiCall("1");
+        session = new UserSessionManager(getActivity());
+        final HashMap<String , String> user = session.getUserDetails();
+        user_id = user.get(UserSessionManager.USER_ID);
+
+        MyOrderListApiCall(user_id);
 
         return view ;
     }
@@ -72,7 +77,7 @@ public class MyOrders extends Fragment {
     void MyOrderListApiCall(String id){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/myOrders/";
+        String api = "http://192.168.1.5:8000/myOrders/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
 

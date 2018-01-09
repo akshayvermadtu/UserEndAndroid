@@ -2,6 +2,7 @@ package com.homebuddy.homebuddy;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -60,10 +61,12 @@ public class ItemlistDisplay extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_itemlist_display, container, false);
         this.mView = view;
-        setHasOptionsMenu(true);
 
         ((Home) getActivity())
                 .setActionBarTitle(sub_category);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         progressBar = (ProgressBar)mView.findViewById(R.id.itemList_loading);
         recyclerView = (RecyclerView) mView.findViewById(R.id.itemListRecycler);
@@ -81,7 +84,7 @@ public class ItemlistDisplay extends Fragment {
     void ItemListApiCall(String subCategory){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/items/";
+        String api = "http://192.168.1.5:8000/items/";
         Map<String, Object> data = new HashMap<>();
         data.put( "sub_category", subCategory );
 
@@ -97,7 +100,7 @@ public class ItemlistDisplay extends Fragment {
                         String itemBrand = itemDetails.get("brand").toString();
                         String itemImage = itemDetails.get("image").toString();
 
-                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.43.43:8000/"+ itemImage);
+                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.1.5:8000/"+ itemImage);
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {

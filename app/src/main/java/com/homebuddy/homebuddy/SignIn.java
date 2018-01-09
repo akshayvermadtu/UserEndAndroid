@@ -1,5 +1,6 @@
 package com.homebuddy.homebuddy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -67,7 +68,7 @@ public class SignIn extends AppCompatActivity {
     void SignInApiCall( String name , String phone , String password , String address){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String api = "http://192.168.43.43:8000/register/";
+        String api = "http://192.168.1.5:8000/register/";
         Map<String, Object> data = new HashMap<>();
         data.put( "name", name );
         data.put( "phone", phone );
@@ -79,8 +80,14 @@ public class SignIn extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
                 try {
-                    String status = response.getString("message");
-                    Toast.makeText(getApplicationContext(),status,Toast.LENGTH_LONG).show();
+                    String status = response.getString("status");
+                    if (status.equals("User already exists")){
+                        Toast.makeText(getApplicationContext(),status,Toast.LENGTH_LONG).show();
+                    }
+                    else if (status.equals("success")){
+                        Intent intent = new Intent("com.homebuddy.homebuddy.Login");
+                        startActivity(intent);
+                    }
                 }
 
                 catch (JSONException e) {

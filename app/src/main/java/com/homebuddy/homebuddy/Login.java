@@ -1,5 +1,6 @@
 package com.homebuddy.homebuddy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +24,11 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
     EditText phone,password;
-    Button button;
+    Button button , buttonSignUp ;
     ProgressBar progressBar;
     LinearLayout linearLayout;
     private static final String TAG = "Login";
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,8 @@ public class Login extends AppCompatActivity {
         phone = (EditText)findViewById(R.id.phone);
         password = (EditText)findViewById(R.id.password);
         button = (Button)findViewById(R.id.register);
-
+        buttonSignUp = (Button)findViewById(R.id.signUpActivity);
+        session = new UserSessionManager(getApplicationContext());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,12 +59,21 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent("com.homebuddy.homebuddy.SignIn");
+                startActivity(intent);
+            }
+        });
     }
 
     void loginApiCall(String checkPhone , String checkPassword){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String api = "http://192.168.43.43:8000/login/";
+        String api = "http://192.168.1.5:8000/login/";
         Map<String, Object> data = new HashMap<>();
         data.put( "phone", checkPhone );
         data.put( "password", checkPassword );
@@ -71,7 +83,15 @@ public class Login extends AppCompatActivity {
 
                 try {
                     String status = response.getString("login");
-                    Toast.makeText(getApplicationContext(),status,Toast.LENGTH_LONG).show();
+                    if (status.equals("success")){
+                        String userId = response.getString("id");
+                        session.create_login_session(userId);
+                        Intent intent = new Intent("com.homebuddy.homebuddy.Home");
+                        startActivity(intent);
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),status,Toast.LENGTH_LONG).show();
+
                 }
 
                 catch (JSONException e) {

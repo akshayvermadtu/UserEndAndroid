@@ -2,6 +2,7 @@ package com.homebuddy.homebuddy;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ public class UserDetails extends Fragment {
     LinearLayout linearLayout ;
     ProgressBar progressBar ;
     TextView nameText , phoneText , addressText ;
+    UserSessionManager session;
+    String user_id;
 
 
     public UserDetails() {
@@ -46,18 +49,23 @@ public class UserDetails extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
         this.mView = view;
-        setHasOptionsMenu(true);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         linearLayout = (LinearLayout)mView.findViewById(R.id.user_details);
         progressBar = (ProgressBar) mView.findViewById(R.id.my_details_progress_bar);
         nameText = (TextView)mView.findViewById(R.id.user_name);
         phoneText = (TextView)mView.findViewById(R.id.user_phone);
         addressText = (TextView)mView.findViewById(R.id.user_address);
+        session = new UserSessionManager(getActivity());
+        HashMap<String , String> user = session.getUserDetails();
+        user_id = user.get(UserSessionManager.USER_ID);
 
         ((Home) getActivity())
                 .setActionBarTitle("My details");
 
-        UserDetailsApiCall("1");
+        UserDetailsApiCall(user_id);
 
         return view ;
     }
@@ -65,7 +73,7 @@ public class UserDetails extends Fragment {
     private void UserDetailsApiCall(String id){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.43.43:8000/myDetails/";
+        String api = "http://192.168.1.5:8000/myDetails/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
 

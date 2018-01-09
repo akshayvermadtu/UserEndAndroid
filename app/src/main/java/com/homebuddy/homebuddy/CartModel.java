@@ -1,6 +1,6 @@
 package com.homebuddy.homebuddy;
 
-public class CartModel {
+class CartModel {
     private String itemName , itemQuantity;
 
     public CartModel(){}

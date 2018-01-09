@@ -1,6 +1,6 @@
 package com.homebuddy.homebuddy;
 
-public class CategoryModel {
+class CategoryModel {
     private String categoryName , imageURL ;
 
     public CategoryModel(){}
@@ -10,7 +10,7 @@ public class CategoryModel {
         this.imageURL = imageURL ;
     }
 
-    public String getCategoryName() {
+    String getCategoryName() {
         return categoryName;
     }
 
@@ -18,7 +18,7 @@ public class CategoryModel {
         this.categoryName = categoryName;
     }
 
-    public String getImageURL() {
+    String getImageURL() {
         return imageURL;
     }
 

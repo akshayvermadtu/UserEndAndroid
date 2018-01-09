@@ -2,7 +2,6 @@ package com.homebuddy.homebuddy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +23,11 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
         mContext = context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName ;
         ImageView itemImage ;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             categoryName = (TextView) view.findViewById(R.id.category_name);
             itemImage = (ImageView) view.findViewById(R.id.category_icon);

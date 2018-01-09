@@ -29,19 +29,21 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
     private List<ItemListModel> activityList;
     private Context mContext;
     private static final String TAG = "AddToCart";
     private ProgressDialog pDialog;
+    private String user_id;
 
     ItemListAdapter(List<ItemListModel> activityList, Context context) {
         this.activityList = activityList;
         mContext = context;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName , itemPrice , itemBrand ;
         ImageView itemImage ;
         Button addToCart;
@@ -68,6 +70,9 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
         pDialog = new ProgressDialog(mContext);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
+        UserSessionManager session = new UserSessionManager(mContext);
+        final HashMap<String , String> user = session.getUserDetails();
+        user_id = user.get(UserSessionManager.USER_ID);
         return new ItemListAdapter.ViewHolder(itemView);
     }
 
@@ -106,7 +111,11 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
                         .setPositiveButton("Proceed",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        AddToCartApiCall("1" , holder.itemName.getText().toString() , editText.getText().toString());
+                                        if (editText.getText().toString().length() != 0 && !editText.getText().toString().isEmpty() && !Objects.equals(editText.getText().toString(), "0")){
+                                            AddToCartApiCall(user_id , holder.itemName.getText().toString() , editText.getText().toString());
+                                        }
+                                        else
+                                            Toast.makeText(mContext,"Please enter valid amount",Toast.LENGTH_SHORT).show();
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -133,7 +142,7 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
     private void AddToCartApiCall(String id, String itemName, String amount){
         showProgressDialog();
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String api = "http://192.168.43.43:8000/addCart/";
+        String api = "http://192.168.1.5:8000/addCart/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
         data.put( "item_name", itemName );

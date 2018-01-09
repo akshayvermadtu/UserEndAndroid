@@ -8,12 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import java.util.HashMap;
+
 
 public class SplashScreen extends AppCompatActivity {
     Boolean connectionCheck;
-    private static final String TAG = "Splash";
     UserSessionManager session;
-    String token ;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,18 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-//                HashMap<String , String> user = session.getUserDetails();
-//                token = user.get(UserSessionManager.TOKEN);
+                HashMap<String , String> user = session.getUserDetails();
+                user_id = user.get(UserSessionManager.USER_ID);
 
-                Intent intent = new Intent("com.homebuddy.homebuddy.Home");
-                startActivity(intent);
+                if (user_id != null && user_id.length() != 0 && !user_id.isEmpty()){
+                    Intent intent = new Intent("com.homebuddy.homebuddy.Home");
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent("com.homebuddy.homebuddy.Login");
+                    startActivity(intent);
+                }
+
 //
 //                    if (connectionCheck) {
 //                        Toast.makeText(getApplicationContext(),"Net connection available",Toast.LENGTH_SHORT).show();
@@ -51,7 +59,7 @@ public class SplashScreen extends AppCompatActivity {
 //                        Toast.makeText(getApplicationContext(),"Net connection not available",Toast.LENGTH_SHORT).show();
 
             }
-        }, 3000);
+        }, 2500);
 
     }
 
