@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ViewFlipper;
@@ -33,8 +34,8 @@ public class HomeFragment extends Fragment{
     protected View mView;
     ViewFlipper viewFlipper;
     RecyclerView recyclerView ;
-    private List<CategoryModel> activityList = new ArrayList<>();
-    private CategoryAdapter mAdapter;
+    List<CategoryModel> activityList = new ArrayList<>();
+    CategoryAdapter mAdapter;
     CategoryModel activityItems;
     private static final String TAG = "categoryList";
     ProgressBar progressBar;
@@ -56,6 +57,21 @@ public class HomeFragment extends Fragment{
 
         ((Home) getActivity())
                 .setActionBarTitle("Home");
+
+        EditText searchClick = (EditText)mView.findViewById(R.id.search_click);
+        searchClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchItem fragment = new SearchItem();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
+                        .replace(R.id.fragment_container,fragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
 
         progressBar = (ProgressBar)mView.findViewById(R.id.category_progress_bar);
         recyclerView = (RecyclerView) mView.findViewById(R.id.category_recycler);

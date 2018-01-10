@@ -1,19 +1,21 @@
 package com.homebuddy.homebuddy;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,28 +33,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemlistDisplay extends Fragment {
+
+public class SearchItem extends Fragment {
     View mView;
     RecyclerView recyclerView ;
     private List<ItemListModel> activityList = new ArrayList<>();
     private ItemListAdapter mAdapter;
     ItemListModel activityItems;
-    private static final String TAG = "ItemList";
-    ProgressBar progressBar,loadMoreProgressBar;
+    private static final String TAG = "ItemSearch";
+    ProgressBar progressBar , loadMoreProgressBar;
     LinearLayoutManager layoutManager ;
-    String sub_category ;
-    String category ;
+    TextView textView ;
+    EditText search ;
     int page_count = 1 ;
 
-    public ItemlistDisplay() {
+    public SearchItem() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sub_category = getArguments().getString("sub_category");
-        category = getArguments().getString("category");
     }
 
 
@@ -60,25 +56,42 @@ public class ItemlistDisplay extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_itemlist_display, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_item, container, false);
         this.mView = view;
 
         ((Home) getActivity())
-                .setActionBarTitle(sub_category);
+                .setActionBarTitle("Express search");
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
-
-        progressBar = (ProgressBar)mView.findViewById(R.id.itemList_loading);
-        loadMoreProgressBar = (ProgressBar)mView.findViewById(R.id.MoreItemList_loading);
-        recyclerView = (RecyclerView) mView.findViewById(R.id.itemListRecycler);
+        progressBar = (ProgressBar)mView.findViewById(R.id.itemSearch_loading);
+        loadMoreProgressBar = (ProgressBar)mView.findViewById(R.id.MoreItem_loading);
+        recyclerView = (RecyclerView) mView.findViewById(R.id.searchItemRecycler);
+        textView = (TextView)mView.findViewById(R.id.search_textView);
         mAdapter = new ItemListAdapter(activityList, getActivity());
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        ItemListApiCall(sub_category);
+        search = (EditText)mView.findViewById(R.id.search_item);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                activityList.clear();
+                mAdapter= new ItemListAdapter(activityList,getActivity());
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                SearchItemListApiCall(s.toString());
+                page_count = 1 ;
+            }
+        });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -86,20 +99,20 @@ public class ItemlistDisplay extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    LoadMoreItemListApiCall(sub_category,++page_count);
+                    LoadMoreItemListApiCall(search.getText().toString(),++page_count);
                 }
             }
         });
 
-        return view;
+        return view ;
     }
 
-    void ItemListApiCall(String subCategory){
+    void SearchItemListApiCall(final String text){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/items/";
+        String api = "http://192.168.1.5:8000/search/";
         Map<String, Object> data = new HashMap<>();
-        data.put( "sub_category", subCategory );
+        data.put( "text", text );
         data.put( "page_no", 1 );
 
         VolleyRequester request = new VolleyRequester(Request.Method.POST,api,new JSONObject(data),new Response.Listener<JSONArray>() {
@@ -109,6 +122,7 @@ public class ItemlistDisplay extends Fragment {
                 for (int i = 0; i <=jsonArray.length(); i++) {
                     try {
                         JSONObject itemDetails = (JSONObject)jsonArray.get(i);
+
                         String itemName = itemDetails.get("name").toString();
                         String itemPrice = itemDetails.get("price").toString();
                         String itemBrand = itemDetails.get("brand").toString();
@@ -123,7 +137,10 @@ public class ItemlistDisplay extends Fragment {
 
                 }
 
-                mAdapter.notifyDataSetChanged();
+                mAdapter = new ItemListAdapter(activityList, getActivity());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter);
                 hideProgress();
             }
         }, new Response.ErrorListener() {
@@ -144,12 +161,12 @@ public class ItemlistDisplay extends Fragment {
         queue.add(request);
     }
 
-    void LoadMoreItemListApiCall(String subCat , int page_no){
+    void LoadMoreItemListApiCall(final String text , int page_no){
         showLoadMoreProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/items/";
+        String api = "http://192.168.1.5:8000/search/";
         Map<String, Object> data = new HashMap<>();
-        data.put( "sub_category", subCat );
+        data.put( "text", text );
         data.put( "page_no", page_no );
 
         VolleyRequester request = new VolleyRequester(Request.Method.POST,api,new JSONObject(data),new Response.Listener<JSONArray>() {
@@ -202,10 +219,9 @@ public class ItemlistDisplay extends Fragment {
         queue.add(request);
     }
 
-
-
     private void showProgress() {
         recyclerView.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -245,15 +261,11 @@ public class ItemlistDisplay extends Fragment {
                         drawer.closeDrawer(GravityCompat.START);
                     } else {
 
-                        SubCategoryList fragment = new SubCategoryList();
-                        Bundle bundle=new Bundle();
-                        bundle.putString("category",category);
-                        fragment.setArguments(bundle);
+                        HomeFragment fragment = new HomeFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container,fragment)
                                 .addToBackStack(null)
                                 .commit();
-
                     }
 
                     return true;

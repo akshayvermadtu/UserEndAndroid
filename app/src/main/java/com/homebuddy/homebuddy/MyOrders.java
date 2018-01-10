@@ -85,7 +85,7 @@ public class MyOrders extends Fragment {
             @Override
             public void onResponse(JSONArray jsonArray) {
 
-                for (int i = 0; i <=jsonArray.length(); i++) {
+                for (int i = jsonArray.length(); i >=0; i--) {
                     try {
                         JSONObject itemDetails = (JSONObject)jsonArray.get(i);
                         String itemList = itemDetails.get("item_list").toString();
