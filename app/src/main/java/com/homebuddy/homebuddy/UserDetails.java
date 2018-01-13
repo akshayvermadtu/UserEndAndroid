@@ -73,7 +73,7 @@ public class UserDetails extends Fragment {
     private void UserDetailsApiCall(String id){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/myDetails/";
+        String api = "https://homebuddy2018.herokuapp.com/myDetails/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
 

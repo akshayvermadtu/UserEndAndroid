@@ -107,7 +107,7 @@ class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     private void RemoveFromCartApiCall(String id, String itemName){
         showProgressDialog();
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String api = "http://192.168.1.5:8000/removeCart/";
+        String api = "https://homebuddy2018.herokuapp.com/removeCart/";
         Map<String, Object> data = new HashMap<>();
         data.put( "customer_id", id );
         data.put( "item_name", itemName );

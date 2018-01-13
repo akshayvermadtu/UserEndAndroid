@@ -84,7 +84,7 @@ public class SubCategoryList extends Fragment {
     void SubCategoryListApiCall(String category){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/showSubCat/";
+        String api = "https://homebuddy2018.herokuapp.com/showSubCat/";
 
         Map<String, Object> data = new HashMap<>();
         data.put( "category", category );

@@ -1,18 +1,24 @@
 package com.homebuddy.homebuddy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
@@ -40,6 +46,7 @@ public class HomeFragment extends Fragment{
     private static final String TAG = "categoryList";
     ProgressBar progressBar;
     LinearLayoutManager layoutManager ;
+    String imageUrl ;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,7 +65,7 @@ public class HomeFragment extends Fragment{
         ((Home) getActivity())
                 .setActionBarTitle("Home");
 
-        EditText searchClick = (EditText)mView.findViewById(R.id.search_click);
+        Button searchClick = (Button) mView.findViewById(R.id.search_click);
         searchClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +140,7 @@ public class HomeFragment extends Fragment{
     void CategoryListApiCall(){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/showCat";
+        String api = "https://homebuddy2018.herokuapp.com/showCat";
 
         VolleyRequester request = new VolleyRequester(Request.Method.GET,api,null,new Response.Listener<JSONArray>() {
             @Override
@@ -144,8 +151,14 @@ public class HomeFragment extends Fragment{
                         JSONObject itemDetails = (JSONObject)jsonArray.get(i);
                         String categoryName = itemDetails.get("category_name").toString();
                         String itemImage = itemDetails.get("image").toString();
+                        if (itemImage.contains("_")){
+                            String str[] = itemImage.split("_");
+                            imageUrl = str[0]+".png";
+                        }
+                        else
+                            imageUrl = itemImage ;
 
-                        activityItems = new CategoryModel(categoryName , "http://192.168.1.5:8000/"+itemImage );
+                        activityItems = new CategoryModel(categoryName , "https://homebuddy2018.herokuapp.com/"+imageUrl );
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {
@@ -188,6 +201,42 @@ public class HomeFragment extends Fragment{
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setIndeterminate(false);
         progressBar.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+                        drawer.closeDrawer(GravityCompat.START);
+                    } else {
+
+                        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+                        setIntent.addCategory(Intent.CATEGORY_HOME);
+                        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(setIntent);
+
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 }

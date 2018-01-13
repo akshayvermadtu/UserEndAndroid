@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
     void loginApiCall(String checkPhone , String checkPassword){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String api = "http://192.168.1.5:8000/login/";
+        String api = "https://homebuddy2018.herokuapp.com/login/";
         Map<String, Object> data = new HashMap<>();
         data.put( "phone", checkPhone );
         data.put( "password", checkPassword );

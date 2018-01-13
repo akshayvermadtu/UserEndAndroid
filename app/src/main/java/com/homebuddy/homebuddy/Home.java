@@ -80,16 +80,6 @@ public class Home extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
@@ -161,7 +151,7 @@ public class Home extends AppCompatActivity
 
     private void UserDetailsApiCall(String id){
         RequestQueue queue = Volley.newRequestQueue(Home.this);
-        String api = "http://192.168.1.5:8000/myDetails/";
+        String api = "https://homebuddy2018.herokuapp.com/myDetails/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
 
@@ -198,6 +188,26 @@ public class Home extends AppCompatActivity
         };
 
         queue.add(request);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
+//            super.onBackPressed();
+        }
     }
 
 }

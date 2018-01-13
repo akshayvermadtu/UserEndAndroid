@@ -68,7 +68,7 @@ public class SignIn extends AppCompatActivity {
     void SignInApiCall( String name , String phone , String password , String address){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String api = "http://192.168.1.5:8000/register/";
+        String api = "https://homebuddy2018.herokuapp.com/register/";
         Map<String, Object> data = new HashMap<>();
         data.put( "name", name );
         data.put( "phone", phone );

@@ -142,7 +142,7 @@ class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder>{
     private void AddToCartApiCall(String id, String itemName, String amount){
         showProgressDialog();
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String api = "http://192.168.1.5:8000/addCart/";
+        String api = "https://homebuddy2018.herokuapp.com/addCart/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
         data.put( "item_name", itemName );

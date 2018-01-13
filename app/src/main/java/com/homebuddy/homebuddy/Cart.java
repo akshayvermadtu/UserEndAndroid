@@ -159,7 +159,7 @@ public class Cart extends Fragment {
     private void ShowCartApiCall(){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/showCart/";
+        String api = "https://homebuddy2018.herokuapp.com/showCart/";
         StringRequest postRequest = new StringRequest(Request.Method.POST, api,
                 new Response.Listener<String>()
                 {
@@ -217,7 +217,7 @@ public class Cart extends Fragment {
     private void PlaceOrderApiCall(String id , String paymentType){
         showProgressDialog();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/placeOrder/";
+        String api = "https://homebuddy2018.herokuapp.com/placeOrder/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
         data.put( "payment_type", paymentType );

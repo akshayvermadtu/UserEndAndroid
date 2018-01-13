@@ -20,7 +20,7 @@ class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder>{
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView itemList , bill , status , payment ;
+        TextView itemList , bill , status , payment , date ;
 
         ViewHolder(View view) {
             super(view);
@@ -28,6 +28,7 @@ class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder>{
             bill = (TextView) view.findViewById(R.id.bill);
             status = (TextView) view.findViewById(R.id.status);
             payment = (TextView) view.findViewById(R.id.payment);
+            date = (TextView) view.findViewById(R.id.order_date);
         }
     }
 
@@ -44,6 +45,7 @@ class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder>{
         holder.bill.setText(activityListItems.getBill());
         holder.status.setText(activityListItems.getStatus());
         holder.payment.setText(activityListItems.getPayment());
+        holder.date.setText(activityListItems.getDate());
     }
 
     @Override

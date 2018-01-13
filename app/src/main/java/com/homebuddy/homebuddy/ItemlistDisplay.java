@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +44,7 @@ public class ItemlistDisplay extends Fragment {
     String sub_category ;
     String category ;
     int page_count = 1 ;
+    String imageUrl ;
 
     public ItemlistDisplay() {
         // Required empty public constructor
@@ -97,7 +99,7 @@ public class ItemlistDisplay extends Fragment {
     void ItemListApiCall(String subCategory){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/items/";
+        String api = "https://homebuddy2018.herokuapp.com/items/";
         Map<String, Object> data = new HashMap<>();
         data.put( "sub_category", subCategory );
         data.put( "page_no", 1 );
@@ -113,8 +115,17 @@ public class ItemlistDisplay extends Fragment {
                         String itemPrice = itemDetails.get("price").toString();
                         String itemBrand = itemDetails.get("brand").toString();
                         String itemImage = itemDetails.get("image").toString();
+                        if (itemImage.contains("_")){
+                            String str[] = itemImage.split("_");
+                            imageUrl = str[0]+".png";
+                        }
+                        else
+                            imageUrl = itemImage ;
 
-                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.1.5:8000/"+ itemImage);
+//                             Toast.makeText(getActivity(),imageUrl,Toast.LENGTH_LONG).show();
+
+
+                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "https://homebuddy2018.herokuapp.com/"+ imageUrl);
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {
@@ -147,7 +158,7 @@ public class ItemlistDisplay extends Fragment {
     void LoadMoreItemListApiCall(String subCat , int page_no){
         showLoadMoreProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/items/";
+        String api = "https://homebuddy2018.herokuapp.com/items/";
         Map<String, Object> data = new HashMap<>();
         data.put( "sub_category", subCat );
         data.put( "page_no", page_no );
@@ -165,8 +176,15 @@ public class ItemlistDisplay extends Fragment {
                             String itemPrice = itemDetails.get("price").toString();
                             String itemBrand = itemDetails.get("brand").toString();
                             String itemImage = itemDetails.get("image").toString();
+                            if (itemImage.contains("_")){
+                                String str[] = itemImage.split("_");
+                                imageUrl = str[0]+".png";
+                            }
+                            else
+                                imageUrl = itemImage ;
 
-                            activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.1.5:8000/"+ itemImage);
+
+                            activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "https://homebuddy2018.herokuapp.com/"+ imageUrl);
                             activityList.add(activityItems);
                         }
 

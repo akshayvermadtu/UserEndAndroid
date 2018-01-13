@@ -59,14 +59,14 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
 
-                <EditText
+                <Button
                     android:id="@+id/search_click"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:paddingStart="15dp"
-                    android:hint="Search here..."
+                    android:text="Search here.."
+                    android:textStyle="italic"
                     android:background="@drawable/rounded_border_edittext"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="10dp"

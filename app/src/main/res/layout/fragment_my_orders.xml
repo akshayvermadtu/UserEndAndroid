@@ -5,7 +5,7 @@
     tools:context="com.homebuddy.homebuddy.MyOrders"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@drawable/grocery_background">
+    android:background="@drawable/blue_background">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_order_recycler"

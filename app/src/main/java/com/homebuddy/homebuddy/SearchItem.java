@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,6 +47,7 @@ public class SearchItem extends Fragment {
     TextView textView ;
     EditText search ;
     int page_count = 1 ;
+    String imageUrl ;
 
     public SearchItem() {
         // Required empty public constructor
@@ -110,7 +112,7 @@ public class SearchItem extends Fragment {
     void SearchItemListApiCall(final String text){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/search/";
+        String api = "https://homebuddy2018.herokuapp.com/search/";
         Map<String, Object> data = new HashMap<>();
         data.put( "text", text );
         data.put( "page_no", 1 );
@@ -127,8 +129,17 @@ public class SearchItem extends Fragment {
                         String itemPrice = itemDetails.get("price").toString();
                         String itemBrand = itemDetails.get("brand").toString();
                         String itemImage = itemDetails.get("image").toString();
+                        if (itemImage.contains("_")){
+                            String str[] = itemImage.split("_");
+                            imageUrl = str[0]+".png";
+                        }
+                        else
+                            imageUrl = itemImage ;
 
-                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.1.5:8000/"+ itemImage);
+                        // Toast.makeText(getActivity(),imageUrl,Toast.LENGTH_LONG).show();
+
+
+                        activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "https://homebuddy2018.herokuapp.com/"+ imageUrl);
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {
@@ -164,7 +175,7 @@ public class SearchItem extends Fragment {
     void LoadMoreItemListApiCall(final String text , int page_no){
         showLoadMoreProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/search/";
+        String api = "https://homebuddy2018.herokuapp.com/search/";
         Map<String, Object> data = new HashMap<>();
         data.put( "text", text );
         data.put( "page_no", page_no );
@@ -182,8 +193,14 @@ public class SearchItem extends Fragment {
                             String itemPrice = itemDetails.get("price").toString();
                             String itemBrand = itemDetails.get("brand").toString();
                             String itemImage = itemDetails.get("image").toString();
+                            if (itemImage.contains("_")){
+                                String str[] = itemImage.split("_");
+                                imageUrl = str[0]+".png";
+                            }
+                            else
+                                imageUrl = itemImage ;
 
-                            activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "http://192.168.1.5:8000/"+ itemImage);
+                            activityItems = new ItemListModel(itemName , "Rs. "+itemPrice , "Brand : "+itemBrand , "https://homebuddy2018.herokuapp.com/"+ imageUrl);
                             activityList.add(activityItems);
                         }
 

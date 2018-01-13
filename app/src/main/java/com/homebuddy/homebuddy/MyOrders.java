@@ -77,7 +77,7 @@ public class MyOrders extends Fragment {
     void MyOrderListApiCall(String id){
         showProgress();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String api = "http://192.168.1.5:8000/myOrders/";
+        String api = "https://homebuddy2018.herokuapp.com/myOrders/";
         Map<String, Object> data = new HashMap<>();
         data.put( "id", id );
 
@@ -92,8 +92,18 @@ public class MyOrders extends Fragment {
                         String bill = itemDetails.get("amount").toString();
                         String status = itemDetails.get("status").toString();
                         String payment = itemDetails.get("delivery_type").toString();
+                        String date_time = itemDetails.get("order_time").toString();
+                        String str[] = date_time.split("T");
+                        String date  = str[0];
+                        String rawTime = str[1];
+                        String strTime[] = rawTime.split(":");
+                        String hours = strTime[0];
+                        String minutes = strTime[1];
+                        String time = hours + ":" + minutes ;
 
-                        activityItems = new MyOrderModel(itemList , "Bill amount : Rs " + bill ,"Status : " +  status ,"Payment type : " + payment);
+                        String finalDateTime = date + " " + time ;
+
+                        activityItems = new MyOrderModel(itemList , "Bill amount : Rs " + bill ,"Status : " +  status ,"Payment type : " + payment , finalDateTime);
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {

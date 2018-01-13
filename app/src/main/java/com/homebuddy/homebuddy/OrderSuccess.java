@@ -31,4 +31,12 @@ public class OrderSuccess extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent setIntent = new Intent("com.homebuddy.homebuddy.Home");
+        startActivity(setIntent);
+    }
+
 }
