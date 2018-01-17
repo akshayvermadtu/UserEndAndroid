@@ -4,23 +4,30 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:enabled="true"
+            android:icon="@drawable/home_icon"
             android:title="Home" />
         <item
             android:id="@+id/nav_cart"
+            android:icon="@drawable/carticin"
             android:title="My cart" />
         <item
             android:id="@+id/nav_orders"
+            android:icon="@drawable/orders_icon"
             android:title="My orders" />
         <item
             android:id="@+id/nav_account"
+            android:icon="@drawable/account_icon"
             android:title="My account" />
         <item
             android:id="@+id/nav_auto_buy"
+            android:icon="@drawable/auto_buy"
             android:title="Auto buy" />
 
         <item
             android:id="@+id/nav_logOut"
-            android:title="Log out"/>
+            android:icon="@drawable/logout_icon"
+            android:title="Log out" />
     </group>
 
 </menu>

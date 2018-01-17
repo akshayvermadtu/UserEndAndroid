@@ -1,34 +1,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/city_blurred"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.homebuddy.homebuddy.SignIn"
-    android:id="@+id/loginLayout">
+    tools:context="com.homebuddy.homebuddy.SignIn">
 
     <!-- Sign up progress -->
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/card_view_2"
-        android:elevation="5dp"
-        android:padding="10dp"
-        android:layout_marginTop="-60dp">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp"
+            android:text="SignUp"
+            android:textAlignment="center"
+            android:textColor="#3073dd"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/signIn_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shadow1"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/signInName"
@@ -42,12 +53,11 @@
             <EditText
                 android:id="@+id/signInPhone"
                 android:layout_width="match_parent"
-                android:maxLength="10"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_phone"
                 android:inputType="phone"
+                android:maxLength="10"
                 android:maxLines="1" />
-
 
 
             <EditText
@@ -69,11 +79,14 @@
 
             <Button
                 android:id="@+id/signIn"
-                style="?android:textAppearanceSmall"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:background="@drawable/login_buttonback"
                 android:text="Register me"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -85,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:visibility="invisible" />
+    </LinearLayout>
 
-    </android.support.v7.widget.CardView>
 </RelativeLayout>
 
