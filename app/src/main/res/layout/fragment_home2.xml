@@ -81,9 +81,6 @@
                 android:gravity="center"
                 android:layout_marginTop="10dp"/>
 
-                <GridView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/category_recycler"
@@ -95,7 +92,6 @@
 
 
                 </android.support.v7.widget.RecyclerView>
-                </GridView>
 
             </LinearLayout>
 
