@@ -10,7 +10,7 @@ class CartModel {
         this.itemQuantity  = itemQuantity ;
     }
 
-    public String getItemName() {
+    String getItemName() {
         return itemName;
     }
 
@@ -18,7 +18,7 @@ class CartModel {
         this.itemName = itemName ;
     }
 
-    public String getItemQuantity() {
+    String getItemQuantity() {
         return itemQuantity;
     }
 
