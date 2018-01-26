@@ -23,7 +23,6 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -32,34 +31,33 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:text="Rs"
+                android:text="Rs N.A."
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView4"
+                android:layout_below="@+id/total"
                 android:layout_marginTop="15dp"
-                android:text="Dlivery Charges"
+                android:text="Delivery Charges"
                 android:textColor="#5d6066"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/delivery_charges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="35dp"
-                android:text="Rs"
+                android:text="Rs N.A."
                 android:textColor="#24cc46"
                 android:textSize="14sp" />
         </RelativeLayout>

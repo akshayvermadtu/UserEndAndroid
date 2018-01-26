@@ -53,7 +53,7 @@ public class Cart extends Fragment {
     RecyclerView recyclerView ;
     private ProgressDialog pDialog;
     private static final String TAG = "PlaceOrder";
-    TextView textView;
+    TextView textView, netAmount , deliveryCharge ;
     Button button;
     UserSessionManager session;
     String user_id;
@@ -83,6 +83,8 @@ public class Cart extends Fragment {
         pDialog.setCancelable(false);
 
         textView = (TextView)mView.findViewById(R.id.empty_cart);
+        netAmount = (TextView)mView.findViewById(R.id.total);
+        deliveryCharge = (TextView)mView.findViewById(R.id.delivery_charges);
 
         session = new UserSessionManager(getActivity());
         final HashMap<String , String> user = session.getUserDetails();
@@ -151,6 +153,7 @@ public class Cart extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
         ShowCartApiCall();
+        BillApiCall(user_id);
 
         return view;
     }
@@ -232,6 +235,54 @@ public class Cart extends Fragment {
                         Intent intent = new Intent("com.homebuddy.homebuddy.OrderSuccess");
                         intent.putExtra("bill",bill);
                         startActivity(intent);
+                    }
+                }
+
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+                hideProgressDialog();
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        })
+        {
+            @Override
+            public String getBodyContentType()
+            {
+                return "application/json";
+            }
+        };
+
+        queue.add(request);
+    }
+
+
+    private void BillApiCall(String id){
+        showProgressDialog();
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        String api = "https://homebuddy2018.herokuapp.com/bill/";
+        Map<String, Object> data = new HashMap<>();
+        data.put( "id", id );
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,api,new JSONObject(data),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    String amount = response.get("bill").toString();
+                    netAmount.setText("Rs. "+amount);
+                    if(!amount.equals("0")){
+                        if((Double)response.get("bill")>200)
+                            deliveryCharge.setText("Rs. 0");
+                        else
+                            deliveryCharge.setText("Rs. 20");
                     }
                 }
 
