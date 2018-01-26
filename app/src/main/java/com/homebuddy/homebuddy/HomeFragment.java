@@ -93,25 +93,18 @@ public class HomeFragment extends Fragment{
 //        ViewCompat.setNestedScrollingEnabled(recyclerView, true);
         viewFlipper = (ViewFlipper)mView.findViewById(R.id.home_view_flipper);
         ImageView imageView = new ImageView(getActivity());
-        Picasso.with(getActivity())
-                .load("https://4.imimg.com/data4/LD/PB/MY-13969859/international-express-delivery-500x500.png")
-                .error(R.mipmap.error_image)
-                .resize(400,200)
-                .into(imageView);
+        imageView.setImageResource(R.drawable.fast_orde);
+//        Picasso.with(getActivity())
+//                .load("https://4.imimg.com/data4/LD/PB/MY-13969859/international-express-delivery-500x500.png")
+//                .error(R.mipmap.error_image)
+//                .resize(400,200)
+//                .into(imageView);
         viewFlipper.addView(imageView);
         ImageView imageView2 = new ImageView(getActivity());
-        Picasso.with(getActivity())
-                .load("http://www.molomart.com/uploads/images/1-composition-with-variety-of-grocery-products-t-monticello1.jpg")
-                .error(R.mipmap.error_image)
-                .resize(400,200)
-                .into(imageView2);
+        imageView2.setImageResource(R.drawable.no_min);
         viewFlipper.addView(imageView2);
         ImageView imageView3 = new ImageView(getActivity());
-        Picasso.with(getActivity())
-                .load("https://beprepared-0qbhwd9wnnmy.stackpathdns.com/media/wysiwyg/custom/misc/Low_Price_Guarantee_Page_Icon.jpg")
-                .error(R.mipmap.error_image)
-                .resize(400,200)
-                .into(imageView3);
+        imageView3.setImageResource(R.drawable.delivery);
         viewFlipper.addView(imageView3);
         viewFlipper.setAutoStart(true);
         viewFlipper.setFlipInterval(2000);

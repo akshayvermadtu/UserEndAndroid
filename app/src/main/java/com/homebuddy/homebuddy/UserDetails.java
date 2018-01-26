@@ -1,9 +1,13 @@
 package com.homebuddy.homebuddy;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,5 +131,43 @@ public class UserDetails extends Fragment {
         progressBar.setIndeterminate(false);
         progressBar.setVisibility(View.GONE);
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+                        drawer.closeDrawer(GravityCompat.START);
+                    } else {
+
+                        HomeFragment fragment = new HomeFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container,fragment)
+                                .addToBackStack(null)
+                                .commit();
+
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
 
 }

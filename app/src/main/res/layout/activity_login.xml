@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:background="@drawable/shadow1"
             android:elevation="24dp"
             android:padding="10dp"
             tools:mockup_opacity="0.5">
