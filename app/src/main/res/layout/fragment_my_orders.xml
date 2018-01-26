@@ -2,19 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.homebuddy.homebuddy.MyOrders"
-    android:orientation="vertical"
+    android:background="#dddddd"
     android:gravity="center_horizontal"
-    android:background="@drawable/blue_background">
+    android:orientation="vertical"
+    tools:context="com.homebuddy.homebuddy.MyOrders">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_order_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
-        android:visibility="visible"
-        android:layout_marginTop="10dp">
+        android:visibility="visible">
 
     </android.support.v7.widget.RecyclerView>
 

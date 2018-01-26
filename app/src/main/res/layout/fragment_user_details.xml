@@ -1,51 +1,107 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context="com.homebuddy.homebuddy.UserDetails"
-    android:background="@drawable/blue_background">
+    tools:context="com.homebuddy.homebuddy.UserDetails">
 
     <LinearLayout
         android:id="@+id/user_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#2776f7"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="-80dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:gravity="center_horizontal">
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/avatar" />
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Name"
-            android:textSize="20sp"
+            android:layout_margin="5dp"
             android:gravity="center_horizontal"
-            android:layout_margin="5dp"/>
+            android:text="Name"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/user_phone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Phone"
-            android:textSize="20sp"
+            android:layout_margin="5dp"
             android:gravity="center_horizontal"
-            android:layout_margin="5dp"/>
+            android:text="Phone"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/user_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Address"
-            android:textSize="20sp"
+            android:layout_margin="5dp"
             android:gravity="center_horizontal"
-            android:layout_margin="5dp"/>
+            android:text="Address"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/shadow1"
+            android:drawableLeft="@drawable/carticin"
+            android:drawableRight="@drawable/right"
+            android:padding="20dp"
+            android:text="    My Cart"
+            android:textAlignment="viewStart"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/shadow1"
+            android:drawableLeft="@drawable/orders_icon"
+            android:drawableRight="@drawable/right"
+            android:padding="20dp"
+            android:text="    My Orders"
+            android:textAlignment="viewStart"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/shadow1"
+            android:drawableLeft="@drawable/logout_icon"
+            android:drawableRight="@drawable/right"
+            android:padding="20dp"
+            android:text="    Log Out"
+            android:textAlignment="viewStart"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
@@ -55,6 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:layout_gravity="center_horizontal"
         android:visibility="invisible" />
 
 </LinearLayout>

@@ -136,7 +136,6 @@ public class Cart extends Fragment {
                                         dialog.cancel();
                                     }
                                 });
-
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
 

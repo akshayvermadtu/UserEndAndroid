@@ -103,7 +103,7 @@ public class MyOrders extends Fragment {
 
                         String finalDateTime = date + " " + time ;
 
-                        activityItems = new MyOrderModel(itemList , "Bill amount : Rs " + bill ,"Status : " +  status ,"Payment type : " + payment , finalDateTime);
+                        activityItems = new MyOrderModel(itemList , "₹" + bill ,"Status : " +  status ,"Payment:" + payment , finalDateTime);
                         activityList.add(activityItems);
 
                     } catch (JSONException e) {
