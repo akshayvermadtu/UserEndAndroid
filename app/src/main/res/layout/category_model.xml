@@ -40,7 +40,7 @@
                 android:layout_marginStart="20dp"
                 android:text="ItemName"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
         </LinearLayout>
 

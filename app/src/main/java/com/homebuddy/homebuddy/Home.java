@@ -128,6 +128,7 @@ public class Home extends AppCompatActivity
 
         }
         else if (id == R.id.nav_auto_buy) {
+            Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
 
         }
         else if (id == R.id.nav_home) {
